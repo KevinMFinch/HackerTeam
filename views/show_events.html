@@ -8,30 +8,34 @@
   <body>
   	<div class="container">
      <h1>Events</h1>
-      {% for event in events %}
-  		<h3>{{ event.name }}, {{ event.location }}</h3>
-  		
-  		<div class="col-md-6">
-	  		<h5>Looking for group</h3>
-			<a class="btn btn-default" href="add_event" role="button">Advertise Yourself!</a>
+     <table class="table table-bordered">
+	      {% for event in events %}
+	      <tr>
+	  		<h3>{{ event.name }}, {{ event.location }}</h3>
+	  		
+	  		<div class="col-md-6">
+		  		<h5>Looking for group</h3>
+				<a class="btn btn-default" href="add_event" role="button">Advertise Yourself!</a>
 
-	  		{% for doc in event.need_group %}
-	  			<p>{{doc.name}}</p>
-	  		{%endfor%}
-	  	</div>
-  		
-  		<div class="col-md-6">
-	  		<h5>Looking for members</h3>
-			<a class="btn btn-default" href="add_event" role="button">Advertise Your Group!</a>
+		  		{% for doc in event.need_group %}
+		  			<p>{{doc.name}}</p>
+		  		{%endfor%}
+		  	</div>
+	  		
+	  		<div class="col-md-6">
+		  		<h5>Looking for members</h5>
+				<a class="btn btn-default" href="add_event" role="button">Advertise Your Group!</a>
 
-	  		{% for doc in event.need_more %}
-	  			<p>{{doc.name}}</p>
-	  		{%endfor%}
-	  	</div>
+		  		{% for doc in event.need_more %}
+		  			<p>{{doc.name}}</p>
+		  		{%endfor%}
+		  	</div>
+		  </td>
 
-	 
+		 
 
-  	  {% endfor %}
+	  	  {% endfor %}
+  	  </table>
 
   	  <a class="btn btn-default" href="add_event" role="button">Add Event</a>
 
