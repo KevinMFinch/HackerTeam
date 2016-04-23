@@ -1,0 +1,17 @@
+<!doctype HTML>
+<html>
+  <head><title>Looking for More Form</title></head>
+  <body>
+     <form action="/looking_for_group" method="POST">
+       <p>
+         name: <input type="text" name="name" value=""/>
+         description: <input type="text" name="description" value=""/>
+         members: <input type="number" name="members" value=""/>
+       </p>
+        {% for event in events %}
+          <input type="radio" name="event" value={{event.name}}> {{event.name}}<br>
+        {%endfor%}
+       <input type="submit" value="Submit"/>
+     </form>
+  </body>
+</html>

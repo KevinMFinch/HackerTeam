@@ -4,33 +4,46 @@
   	<title>Show Events</title>
   	<link rel="stylesheet" href="/styles/bootstrap.min.css">
    	<link rel="stylesheet" href="/styles/events.css">
+   	<script type="text/javascript" src = "https://code.jquery.com/jquery-2.2.3.min.js"></script>
   </head>
   <body>
   	<div class="container">
      <h1>Events</h1>
+
+     <div class = "col-md-3 col-md-offset-3">
+     	<a class="btn btn-default" href="looking_for_group" role="button">Advertise Yourself!</a>
+	</div>
+
+	<div class="col-md-3">
+		<a class="btn btn-default" href="looking_for_more" role="button">Advertise Your Group!</a>
+	</div>
+
       {% for event in events %}
-  		<h3>{{ event.name }}, {{ event.location }}</h3>
-  		
-  		<div class="col-md-6">
-	  		<h5>Looking for group</h3>
-			<a class="btn btn-default" href="add_event" role="button">Advertise Yourself!</a>
+	    <div class="hackathon">  	
+	  		<h3 class="event_title">{{ event.name }}, {{ event.location }}</h3>
+	  		
+	  		<div class = "col-md-12">
+		  		<div class="col-md-6">
+			  		{% if event.need_group.length > 0 or event.need_more.length > 0 %}
+			  			<h5>Looking for group</h5>
+			  		{%endif%}
 
-	  		{% for doc in event.need_group %}
-	  			<p>{{doc.name}}</p>
-	  		{%endfor%}
-	  	</div>
-  		
-  		<div class="col-md-6">
-	  		<h5>Looking for members</h3>
-			<a class="btn btn-default" href="add_event" role="button">Advertise Your Group!</a>
+			  		{% for doc in event.need_group %}
+			  			<p>{{doc.name}}. {{doc.description}}</p>
+			  		{%endfor%}
+			  	</div>
+		  		
+		  		<div class="col-md-6">
+			  		{% if event.need_group.length > 0 or event.need_more.length > 0 %}
+			  			<h5>Looking for Members</h5>
+			  		{% endif %}
 
-	  		{% for doc in event.need_more %}
-	  			<p>{{doc.name}}</p>
-	  		{%endfor%}
-	  	</div>
-
-	 
-
+			  		{% for doc in event.need_more %}
+			  			<p>{{doc.name}}. {{doc.description}}</p>
+			  		{%endfor%}
+			  	</div>
+		  	</div>
+		</div>
   	  {% endfor %}
 
   	  <a class="btn btn-default" href="add_event" role="button">Add Event</a>

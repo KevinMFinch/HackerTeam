@@ -31,6 +31,63 @@ MongoClient.connect('mongodb://localhost:27017/HackerTeam', function(err, db) {
         })
     });
 
+    app.get('/looking_for_group', function(req, res, next){
+        db.collection("events").find({}).toArray(function(err,docs){
+            res.render("looking_for_group", {'events':docs});
+        })
+    });
+
+    app.post('/looking_for_group', function(req, res, next) {
+        var name = req.body.name;
+        var description = req.body.description;
+        var eventName = req.body.event;
+        console.log(name +" "+description+" "+eventName);
+        if (name =='' || description == '' || eventName == '') {
+            next('Please provide an entry for all fields');
+        }
+        else {
+            db.collection("events").updateOne(
+                {"name":eventName},
+                { $push : {"need_group":{"name":name,"description":description}}},
+                function (err, r) {
+                    assert.equal(null, err);
+                    db.collection("events").find({}).toArray(function(err,docs){
+                        res.render("show_events", {'events':docs});
+                    })
+                }
+            );
+        }
+    });
+
+    app.get('/looking_for_more', function(req, res, next){
+        db.collection("events").find({}).toArray(function(err,docs){
+            res.render("looking_for_more", {'events':docs});
+        })
+    });
+
+    app.post('/looking_for_more', function(req, res, next) {
+        var name = req.body.name;
+        var description = req.body.description;
+        var members = req.body.members;
+        var eventName = req.body.event;
+        console.log(name +" "+description+" "+eventName);
+        if (name =='' || description == '' || eventName == '' || members =='') {
+            next('Please provide an entry for all fields');
+        }
+        else {
+            db.collection("events").updateOne(
+                {"name":eventName},
+                { $push : {"need_more":{"name":name,"description":description, "members":members}}},
+                function (err, r) {
+                    assert.equal(null, err);
+                    db.collection("events").find({}).toArray(function(err,docs){
+                        res.render("show_events", {'events':docs});
+                    })
+                }
+            );
+        }
+    });
+
     app.get('/add_event', function(req, res, next){
         res.render("add_event");
     });

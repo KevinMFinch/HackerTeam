@@ -2,6 +2,11 @@ p {
 	color: red;
 }
 
+.event_title{
+	text-decoration: underline;
+	padding-top: 1.3em;
+}
+
 body {
 	text-align: center;
 }
