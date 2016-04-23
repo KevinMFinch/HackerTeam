@@ -1,0 +1,15 @@
+{
+    "name": "HackerTeam",
+    "version": "0.1.0",
+    "description": "Find a team for a hackathon",
+    "main": "app.js",
+    "dependencies": {
+        "consolidate": "~0.13.1",
+        "express": "~4.13.3",
+        "mongodb": "~2.1.3",
+        "body-parser": "~1.14.2",
+        "nunjucks": "~2.2.0"
+    },
+    "author": "Kevin Finch",
+    "license": "0BSD"
+}
