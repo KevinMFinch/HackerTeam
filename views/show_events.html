@@ -1,10 +1,34 @@
 <!doctype HTML>
 <html>
-  <head><title>Show Events</title></head>
+  <head>
+  	<title>Show Events</title>
+  	<link rel="stylesheet" href="/styles/bootstrap.min.css">
+   	<link rel="stylesheet" href="/styles/events.css">
+  </head>
   <body>
+  	<div class="container">
      <h1>Events</h1>
       {% for event in events %}
-  		<li>{{ event.name }}, {{ event.location }}</a></li>
+  		<h3>{{ event.name }}, {{ event.location }}</h3>
+  		
+  		<div class="col-md-6">
+	  		<h5>Looking for group</h3>
+	  		{% for doc in event.need_group %}
+	  			<p>{{doc.name}}</p>
+	  		{%endfor%}
+	  	</div>
+  		
+  		<div class="col-md-6">
+	  		<h5>Looking for members</h3>
+	  		{% for doc in event.need_more %}
+	  			<p>{{doc.name}}</p>
+	  		{%endfor%}
+	  	</div>
+
   	  {% endfor %}
+
+  	  <a class="btn btn-default" href="add_event" role="button">Add Event</a>
+
+  	</div>
   </body>
 </html>

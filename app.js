@@ -5,6 +5,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     assert = require('assert');
 
+app.use(express.static(__dirname + '/public'));
 app.engine('html', engines.nunjucks);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
@@ -23,31 +24,32 @@ MongoClient.connect('mongodb://localhost:27017/HackerTeam', function(err, db) {
     console.log("Successfully connected to MongoDB.");
 
     //Add a route to /show_movies
-
-    app.get('/show_events', function(req,res){
-        db.collection("events").find({}).toArray(function(err, docs){
-            res.render("show_events", {'events':docs});
-
-        });
-    });
     
     app.get('/', function(req, res, next){
-        res.render("add_movie", {});
+        db.collection("events").find({}).toArray(function(err,docs){
+            res.render("show_events", {'events':docs});
+        })
     });
 
-    app.post('/add_movie', function(req, res, next) {
-        var title = req.body.title;
-        var year = req.body.year;
-        var imdb = req.body.imdb;
-        if (title =='' || year == '' || imdb == '') {
+    app.get('/add_event', function(req, res, next){
+        res.render("add_event");
+    });
+
+    app.post('/add_event', function(req, res, next) {
+        var name = req.body.name;
+        var location = req.body.location;
+        var date = req.body.date;
+        if (name =='' || location == '' || date == '') {
             next('Please provide an entry for all fields');
         }
         else {
-            db.collection("movies").insertOne(
-                {"title":title, "year":year, "imdb":imdb},
+            db.collection("events").insertOne(
+                {"name":name, "location":location, "date":date, "need_group":[],"need_more":[]},
                 function (err, r) {
                     assert.equal(null, err);
-                    res.send("Document inserted with _id: " + r.insertedId);
+                    db.collection("events").find({}).toArray(function(err,docs){
+                        res.render("show_events", {'events':docs});
+                    })
                 }
             );
         }
